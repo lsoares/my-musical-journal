@@ -1,0 +1,6 @@
+<mat-list *ngFor="let piece of musicalPieces, last as last">
+	<mat-list-item routerLink='pieces/{{ piece.id }}'>
+		{{ piece.title }}, {{ piece.composer }}
+	</mat-list-item> 
+	<mat-divider *ngIf="!last"></mat-divider>
+</mat-list>

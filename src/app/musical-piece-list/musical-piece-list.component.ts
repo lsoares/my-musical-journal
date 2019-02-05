@@ -3,7 +3,7 @@ import { MusicalPieceService } from '../musical-piece-service';
 import { MusicalPiece } from '../model/musical-piece';
 
 @Component({
-  selector: 'app-musical-piece',
+  selector: 'app-musical-piece-list',
   templateUrl: './musical-piece-list.component.html',
   styleUrls: ['./musical-piece-list.component.scss']
 })

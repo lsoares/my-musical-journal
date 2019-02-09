@@ -1,1 +1,8 @@
 <h3>{{ musicalPiece.title }}, {{ musicalPiece.composer }}</h3>
+
+<button mat-raised-button color="primary" (click)="onStart()" *ngIf="!isStarted()">
+	Start ▶
+</button>
+<button mat-raised-button color="primary" (click)="onStop()" *ngIf="isStarted()">
+	Stop ⏹
+</button>

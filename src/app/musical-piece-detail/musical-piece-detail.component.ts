@@ -21,9 +21,13 @@ export class MusicalPieceDetailComponent implements OnInit {
     this.musicalPiece = this.musicalPieceService.getMusicalPiece(Number(this.route.snapshot.params.id));
   }
 
-  isStarted(): boolean {
+  getLastPractice(): Practice | null {
     const practices = this.getPractices(this.musicalPiece.id);
-    return practices.length && practices[practices.length - 1].endDate == null;
+    return practices.length ? practices[practices.length - 1] : null;
+  }
+
+  isStarted(): boolean {
+    return this.getLastPractice() != null && this.getLastPractice().endDate == null;
   }
 
   onStop() {
@@ -38,7 +42,7 @@ export class MusicalPieceDetailComponent implements OnInit {
 
   onStart() {
     // TODO: stop other practice running!
-    // TODO: set interval
+    // TODO: set interval to auto update
     const practices = this.getPractices(this.musicalPiece.id);
     practices.push(new Practice());
     this.storePractices(this.musicalPiece.id, practices);

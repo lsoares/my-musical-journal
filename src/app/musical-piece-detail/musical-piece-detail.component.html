@@ -6,3 +6,6 @@
 <button mat-raised-button color="primary" (click)="onStop()" *ngIf="isStarted()">
 	Stop ⏹
 </button>
+<div *ngIf="isStarted()">
+	{{ getLastPractice() | practiceTime }}
+</div>

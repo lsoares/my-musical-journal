@@ -11,6 +11,7 @@ import { Practice } from '../model/practice';
 })
 export class MusicalPieceDetailComponent implements OnInit {
   musicalPiece: MusicalPiece;
+  practices: Practice[];
   stopped: boolean;
 
   constructor(
@@ -19,11 +20,11 @@ export class MusicalPieceDetailComponent implements OnInit {
 
   ngOnInit() {
     this.musicalPiece = this.musicalPieceService.getMusicalPiece(Number(this.route.snapshot.params.id));
+    this.practices = this.loadPractices(this.musicalPiece.id);
   }
 
   getLastPractice(): Practice | null {
-    const practices = this.getPractices(this.musicalPiece.id);
-    return practices.length ? practices[practices.length - 1] : null;
+    return this.practices.length ? this.practices[this.practices.length - 1] : null;
   }
 
   isStarted(): boolean {
@@ -31,24 +32,22 @@ export class MusicalPieceDetailComponent implements OnInit {
   }
 
   onStop() {
-    const practices = this.getPractices(this.musicalPiece.id);
-    if (!practices.length) {
+    if (!this.practices.length) {
       throw (new Error(`No practice started for musical piece ${this.musicalPiece.id}`));
     }
-    const lastPractice = practices.pop();
-    practices.push(new Practice(lastPractice.startDate, new Date()));
-    this.storePractices(this.musicalPiece.id, practices);
+    const lastPractice = this.practices.pop();
+    this.practices.push(new Practice(lastPractice.startDate, new Date()));
+    this.storePractices(this.musicalPiece.id, this.practices);
   }
 
   onStart() {
     // TODO: stop other practice running!
     // TODO: set interval to auto update
-    const practices = this.getPractices(this.musicalPiece.id);
-    practices.push(new Practice());
-    this.storePractices(this.musicalPiece.id, practices);
+    this.practices.push(new Practice());
+    this.storePractices(this.musicalPiece.id, this.practices);
   }
 
-  private getPractices(id: number): Practice[] {
+  private loadPractices(id: number): Practice[] {
     return JSON.parse(localStorage.getItem(id.toString()) || '[]')
       .map((practice: Practice) =>
          new Practice(

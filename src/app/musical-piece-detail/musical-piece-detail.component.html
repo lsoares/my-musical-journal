@@ -9,3 +9,6 @@
 <div *ngIf="isStarted()">
 	{{ getLastPractice() | practiceTime }}
 </div>
+
+<app-practices-chart [practices]="practices">
+</app-practices-chart>

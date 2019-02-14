@@ -10,6 +10,8 @@ import { MusicalPieceListComponent } from './musical-piece-list/musical-piece-li
 import { MusicalPieceDetailComponent } from './musical-piece-detail/musical-piece-detail.component';
 import { PracticeTimePipe } from './practice-time.pipe';
 import { PracticesChartComponent } from './practices-chart/practices-chart.component';
+import { CreateMusicalPieceComponent } from './create-musical-piece/create-musical-piece.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,14 +19,16 @@ import { PracticesChartComponent } from './practices-chart/practices-chart.compo
     MusicalPieceListComponent,
     MusicalPieceDetailComponent,
     PracticeTimePipe,
-    PracticesChartComponent
+    PracticesChartComponent,
+    CreateMusicalPieceComponent
   ],
   imports: [
     ChartsModule,
     MaterialModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

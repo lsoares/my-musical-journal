@@ -1,3 +1,4 @@
+<i class="material-icons" routerLink='/'>home</i>
 <h3>{{ musicalPiece.title }}, {{ musicalPiece.composer }}</h3>
 
 <button mat-raised-button color="primary" (click)="onStart()" *ngIf="!isStarted()">
@@ -9,6 +10,5 @@
 <div *ngIf="isStarted()">
 	{{ getLastPractice() | practiceTime }}
 </div>
-
-<app-practices-chart [practices]="practices">
+<app-practices-chart [practices]="getPractices()">
 </app-practices-chart>

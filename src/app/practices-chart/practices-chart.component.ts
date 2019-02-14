@@ -15,9 +15,7 @@ export class PracticesChartComponent implements OnInit {
   barChartLabels: string[] = [];
   barChartType = 'bar';
   barChartLegend = false;
-  barChartData: any[] = [
-    { data: [], label: '' }
-  ];
+  barChartData: any[] = [ { data: [], label: '' } ];
 
   constructor() { }
 
@@ -34,7 +32,7 @@ export class PracticesChartComponent implements OnInit {
     this.barChartData[0].data = Array(size).fill(0);
     this.practices.forEach(practice => {
       const minutes = Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
-      const dayOffset = Math.round((new Date().getTime() - practice.startDate.getTime()) / (1000 * 60 * 60 * 24));
+      const dayOffset = Math.round((new Date().getTime() - practice.endDate.getTime()) / (1000 * 60 * 60 * 24));
       this.barChartData[0].data[size - dayOffset - 1] += minutes;
     });
   }

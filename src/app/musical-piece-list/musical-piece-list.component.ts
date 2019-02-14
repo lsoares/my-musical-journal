@@ -9,6 +9,7 @@ import { MusicalPiece } from '../model/musical-piece';
 })
 export class MusicalPieceListComponent implements OnInit {
   musicalPieces: MusicalPiece[];
+  creating = false;
 
   constructor(private musicPieceService: MusicalPieceService) {}
 

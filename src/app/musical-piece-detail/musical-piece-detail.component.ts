@@ -11,7 +11,6 @@ import { Practice } from '../model/practice';
 })
 export class MusicalPieceDetailComponent implements OnInit {
   musicalPiece: MusicalPiece;
-  practices: Practice[];
   stopped: boolean;
 
   constructor(
@@ -20,11 +19,15 @@ export class MusicalPieceDetailComponent implements OnInit {
 
   ngOnInit() {
     this.musicalPiece = this.musicalPieceService.getMusicalPiece(Number(this.route.snapshot.params.id));
-    this.practices = this.loadPractices(this.musicalPiece.id);
+  }
+
+  getPractices(): Practice[] {
+    return this.musicalPieceService.loadPractices(this.musicalPiece.id);
   }
 
   getLastPractice(): Practice | null {
-    return this.practices.length ? this.practices[this.practices.length - 1] : null;
+    const practices = this.getPractices();
+    return practices.length ? practices[practices.length - 1] : null;
   }
 
   isStarted(): boolean {
@@ -32,32 +35,20 @@ export class MusicalPieceDetailComponent implements OnInit {
   }
 
   onStop() {
-    if (!this.practices.length) {
+    const practices = this.getPractices();
+    if (!practices.length) {
       throw (new Error(`No practice started for musical piece ${this.musicalPiece.id}`));
     }
-    const lastPractice = this.practices.pop();
-    this.practices.push(new Practice(lastPractice.startDate, new Date()));
-    this.storePractices(this.musicalPiece.id, this.practices);
+    const lastPractice = practices.pop();
+    practices.push(new Practice(lastPractice.startDate, new Date()));
+    this.musicalPieceService.storePractices(this.musicalPiece.id, practices);
   }
 
   onStart() {
+    const practices = this.getPractices();
     // TODO: stop other practice running!
     // TODO: set interval to auto update
-    this.practices.push(new Practice());
-    this.storePractices(this.musicalPiece.id, this.practices);
-  }
-
-  private loadPractices(id: number): Practice[] {
-    return JSON.parse(localStorage.getItem(id.toString()) || '[]')
-      .map((practice: Practice) =>
-         new Practice(
-          practice.startDate && new Date(practice.startDate),
-          practice.endDate && new Date(practice.endDate)
-        )
-      );
-  }
-
-  private storePractices(id: number, practices: Practice[]) {
-    localStorage.setItem(id.toString(), JSON.stringify(practices));
+    practices.push(new Practice());
+    this.musicalPieceService.storePractices(this.musicalPiece.id, practices);
   }
 }

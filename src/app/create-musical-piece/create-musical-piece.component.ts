@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MusicalPieceService } from '../musical-piece-service';
 import { MusicalPiece } from '../model/musical-piece';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-create-musical-piece',
@@ -9,8 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./create-musical-piece.component.scss']
 })
 export class CreateMusicalPieceComponent implements OnInit {
-  title: string;
-  composer: string;
+  musicalPiece: MusicalPiece = new MusicalPiece(0, '', '');
 
   constructor(
     private readonly musicalPieceService: MusicalPieceService,
@@ -19,8 +19,9 @@ export class CreateMusicalPieceComponent implements OnInit {
   ngOnInit() {
   }
 
-  onCreate() {
-    const id = this.musicalPieceService.createMusicalPiece(new MusicalPiece(null, this.title, this.composer));
+  onSubmit(createForm: HTMLFormElement) {
+    if (!createForm.checkValidity()) { return; }
+    const id = this.musicalPieceService.createMusicalPiece(this.musicalPiece);
     this.router.navigate(['pieces', id]);
   }
 }

@@ -1,13 +1,15 @@
-<div>
+<form (ngSubmit)="onSubmit(f)" #f>
   <mat-form-field>
-    <input matInput placeholder="Title" [(ngModel)]="title">
+    <input matInput placeholder="Title" required pattern=".{3,}"
+           [(ngModel)]="musicalPiece.title" name="title">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Composer" [(ngModel)]="composer">
+    <input matInput placeholder="Composer" required pattern=".{3,}"
+           [(ngModel)]="musicalPiece.composer" name=composer>
   </mat-form-field>
 
-  <button matInput mat-raised-button color="primary" (click)="onCreate()">
-    Create ✔
+  <button type="submit" class="btn btn-success" mat-raised-button color="primary">
+      Create ✔
   </button>
-</div>
+</form>

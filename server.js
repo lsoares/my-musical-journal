@@ -1,14 +1,16 @@
-// Install express server
-const express = require('express');
 const path = require('path');
+const express = require('express');
 const app = express();
 
-// Serve only the static files form the dist directory
-app.use(express.static('./dist/musicjournal2'));
+const env = process.env.NODE_ENV || 'development'
+const forceSSL = (req, res, next) => {
+	if (req.headers['x-forwarded-proto'] !== 'https') {
+		return res.redirect(['https://', req.get('Host'), req.url].join(''));
+	}
+	return next();
+}
+if (env === 'production') app.use(forceSSL)
 
-app.get('/*', (req, res) =>
-	res.sendFile(path.join(__dirname, '/dist/musicjournal2/index.html'))
-);
-
-// Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+app.use(express.static(__dirname + './dist/musicjournal2'));
+app.get('/*', (req, res) => res.sendFile(path.join(__dirname, '/dist/musicjournal2/index.html')))
+app.listen(process.env.PORT || 5000)

@@ -37,7 +37,7 @@ export class MusicalPieceDetailComponent implements OnInit {
   onStop() {
     const practices = this.getPractices();
     if (!practices.length) {
-      throw (new Error(`No practice started for musical piece ${this.musicalPiece.id}`));
+      throw (new Error(`No practice started for musical piece ${this.musicalPiece.title}`));
     }
     const lastPractice = practices.pop();
     practices.push(new Practice(lastPractice.startDate, new Date()));

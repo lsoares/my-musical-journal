@@ -43,7 +43,6 @@ export class MusicalPieceDetailComponent implements OnInit {
 
   onStarting() {
     this.musicalPieceService.startPractice(this.musicalPiece.id);
-    // TODO: set interval to auto update
   }
 
   onStopping() {

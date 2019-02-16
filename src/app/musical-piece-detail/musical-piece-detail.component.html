@@ -10,7 +10,9 @@
 <div *ngIf="isStarted()">
   {{ getLastPractice() | practiceTime }}
 </div>
-<app-practices-chart [practices]="getPractices()">
+<app-practices-chart
+   [practices]="getPractices()"
+   [musicalPiece]="musicalPiece">
 </app-practices-chart>
 
 <table>

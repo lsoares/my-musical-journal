@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Practice } from '../model/practice';
 import * as moment from 'moment';
+import { MusicalPiece } from '../model/musical-piece';
 
 @Component({
   selector: 'app-practices-chart',
@@ -9,18 +10,20 @@ import * as moment from 'moment';
 })
 export class PracticesChartComponent implements OnInit {
 
+  @Input() musicalPiece: MusicalPiece;
   @Input() practices: Practice[];
 
   barChartOptions: any = { scaleShowVerticalLines: false, responsive: false };
   barChartLabels: string[] = [];
   barChartType = 'bar';
-  barChartLegend = false;
+  barChartLegend = true;
   barChartData: any[] = [ { data: [], label: '' } ];
 
   constructor() { }
 
   ngOnInit() {
-    const size = 7;
+    this.barChartData[0].label = this.musicalPiece.title;
+    const size = 15;
     // labels
     for (let i = size; i > 0; i--) {
       const d = new Date();

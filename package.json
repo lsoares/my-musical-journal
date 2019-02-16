@@ -8,19 +8,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot --prod --output-path docs --base-href /my-musical-journal/",
-    "deploy": "npm run postinstall && cp docs/index.html docs/404.html && git add docs/* && git commit -m 'Deploy' && git push"
-  },
-  "engines": {
-    "node": "v11.10.0",
-    "npm": "6.7.0"
+    "postinstall": "ng build --aot --prod --output-path docs --base-href /my-musical-journal/ && cp docs/index.html docs/404.html",
+    "deploy": "npm run postinstall && git add docs/* && git commit -m 'Deploy' && git push"
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.13.1",
-    "@angular/cli": "^7.3.1",
-    "@angular/compiler-cli": "^7.2.4",
-    "typescript": "~3.2.2",
     "@angular/animations": "^7.2.3",
     "@angular/cdk": "^7.3.0",
     "@angular/common": "~7.2.0",

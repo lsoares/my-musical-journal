@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --prod"
+    "postinstall": "cp docs/index.html docs/404.html && ng build --aot --prod --output-path docs --base-href /my-musical-journal/"
   },
   "engines": {
     "node": "v11.10.0",
@@ -47,6 +47,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
+    "enhanced-resolve": "^3.3.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.0.0",

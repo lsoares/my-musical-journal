@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./create-musical-piece.component.scss']
 })
 export class CreateMusicalPieceComponent implements OnInit {
-  musicalPiece: MusicalPiece = new MusicalPiece(0, '', '');
+  musicalPiece = { title: '', composer: '' };
 
   constructor(
     private readonly musicalPieceService: MusicalPieceService,
@@ -21,6 +21,7 @@ export class CreateMusicalPieceComponent implements OnInit {
 
   onSubmit(createForm: HTMLFormElement) {
     if (!createForm.checkValidity()) { return; }
+
     const id = this.musicalPieceService.createMusicalPiece(this.musicalPiece);
     this.router.navigate(['pieces', id]);
   }

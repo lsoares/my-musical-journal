@@ -17,9 +17,9 @@ export class MusicalPieceService {
     return this.getMusicalPieces().find(piece => piece.id === id);
   }
 
-  createMusicalPiece(musicalPiece: MusicalPiece) {
+  createMusicalPiece({ title, composer }) {
     const musicalPieces = this.getMusicalPieces();
-    const newMusicalPiece = new MusicalPiece(new Date().valueOf(), musicalPiece.title, musicalPiece.composer);
+    const newMusicalPiece = new MusicalPiece(new Date().valueOf(), title, composer);
     musicalPieces.push(newMusicalPiece);
     localStorage.setItem('musicalPieces', JSON.stringify(musicalPieces));
     return newMusicalPiece.id;

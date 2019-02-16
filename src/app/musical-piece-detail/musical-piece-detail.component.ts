@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicalPieceService } from '../musical-piece-service';
 import { MusicalPiece } from '../model/musical-piece';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Practice } from '../model/practice';
 
 @Component({
@@ -11,14 +11,21 @@ import { Practice } from '../model/practice';
 })
 export class MusicalPieceDetailComponent implements OnInit {
   musicalPiece: MusicalPiece;
-  stopped: boolean;
 
   constructor(
     private readonly musicalPieceService: MusicalPieceService,
-    private readonly route: ActivatedRoute) { }
+    private readonly route: ActivatedRoute,
+    private readonly router: Router) { }
 
   ngOnInit() {
     this.musicalPiece = this.musicalPieceService.getMusicalPiece(Number(this.route.snapshot.params.id));
+  }
+
+  onDeleteMusicalPiece() {
+    if (confirm(`Delete ${this.musicalPiece.title}?`)) {
+      this.musicalPieceService.deleteMusicalPiece(this.musicalPiece.id);
+      this.router.navigate(['']);
+    }
   }
 
   getPractices(): Practice[] {

@@ -26,6 +26,13 @@ export class MusicalPieceService {
     return newMusicalPiece.id;
   }
 
+  deleteMusicalPiece(id: number): any {
+    const musicalPieces = this.getMusicalPieces()
+      .filter(piece => piece.id !== id);
+    localStorage.setItem('musicalPieces', JSON.stringify(musicalPieces));
+    localStorage.removeItem(id.toString()); // remove practices
+  }
+
   startPractice(musicalPieceId: number): any {
     const practices = this.loadPractices(musicalPieceId);
     // TODO: stop other practice running!

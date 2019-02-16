@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MusicalPiece } from './model/musical-piece';
 import { Practice } from './model/practice';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MusicalPieceService {
 
-  constructor() {}
+  constructor() { }
 
   getMusicalPieces(): MusicalPiece[] {
     return JSON.parse(localStorage.getItem('musicalPieces') || '[]');
@@ -25,17 +26,41 @@ export class MusicalPieceService {
     return newMusicalPiece.id;
   }
 
-  loadPractices(id: number): Practice[] {
-    return JSON.parse(localStorage.getItem(id.toString()) || '[]')
+  startPractice(musicalPieceId: number): any {
+    const practices = this.loadPractices(musicalPieceId);
+    // TODO: stop other practice running!
+    practices.push(new Practice(new Date().valueOf()));
+    this.storePractices(musicalPieceId, practices);
+  }
+
+  stopPractice(musicalPieceId: number): any {
+    const practices = this.loadPractices(musicalPieceId);
+    if (!practices.length) {
+      throw (new Error(`No practice started for musical piece ${musicalPieceId}`));
+    }
+    const lastPractice = practices.pop();
+    practices.push(new Practice(lastPractice.id, lastPractice.startDate, new Date()));
+    this.storePractices(musicalPieceId, practices);
+  }
+
+  deletePractice(musicalPieceId: number, practiceId: number) {
+    const practices = this.loadPractices(musicalPieceId)
+        .filter(practice => practice.id !== practiceId);
+    this.storePractices(musicalPieceId, practices);
+  }
+
+  loadPractices(musicalPieceId: number): Practice[] {
+    return JSON.parse(localStorage.getItem(musicalPieceId.toString()) || '[]')
       .map((practice: Practice) =>
         new Practice(
+          practice.id,
           practice.startDate && new Date(practice.startDate),
           practice.endDate && new Date(practice.endDate)
         )
       );
   }
 
-  storePractices(id: number, practices: Practice[]) {
-    localStorage.setItem(id.toString(), JSON.stringify(practices));
+  private storePractices(musicalPieceId: number, practices: Practice[]) {
+    localStorage.setItem(musicalPieceId.toString(), JSON.stringify(practices));
   }
 }

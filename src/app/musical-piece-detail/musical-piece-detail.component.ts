@@ -34,21 +34,16 @@ export class MusicalPieceDetailComponent implements OnInit {
     return this.getLastPractice() != null && this.getLastPractice().endDate == null;
   }
 
-  onStop() {
-    const practices = this.getPractices();
-    if (!practices.length) {
-      throw (new Error(`No practice started for musical piece ${this.musicalPiece.title}`));
-    }
-    const lastPractice = practices.pop();
-    practices.push(new Practice(lastPractice.startDate, new Date()));
-    this.musicalPieceService.storePractices(this.musicalPiece.id, practices);
+  onStarting() {
+    this.musicalPieceService.startPractice(this.musicalPiece.id);
+    // TODO: set interval to auto update
   }
 
-  onStart() {
-    const practices = this.getPractices();
-    // TODO: stop other practice running!
-    // TODO: set interval to auto update
-    practices.push(new Practice());
-    this.musicalPieceService.storePractices(this.musicalPiece.id, practices);
+  onStopping() {
+    this.musicalPieceService.stopPractice(this.musicalPiece.id);
+  }
+
+  onDeletingPractice(id: number) {
+    this.musicalPieceService.deletePractice(this.musicalPiece.id, id);
   }
 }

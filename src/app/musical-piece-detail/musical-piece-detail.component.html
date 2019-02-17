@@ -11,17 +11,14 @@
   {{ getLastPractice() | practiceTime }}
 </div>
 <app-practices-chart
-   [practices]="getPractices()"
-   [musicalPiece]="musicalPiece">
+  [musicalPiece]="musicalPiece"
+  [practices]="getPractices()">
 </app-practices-chart>
 
-<table>
-  <tr *ngFor="let practice of getPractices()">
-    <td>{{ practice.startDate.toLocaleDateString() }}</td>
-    <td>{{ practice | practiceTime }}</td>
-    <td title="Apagar" (click)="onDeletingPractice(practice.id)">x</td>
-  </tr>
-</table>
+<app-practices-list
+  [musicalPiece]="musicalPiece"
+  [practices]="getPractices()">
+</app-practices-list>
 
 <i class="material-icons" (click)="onDeleteMusicalPiece()" title="Delete musical piece">
   delete

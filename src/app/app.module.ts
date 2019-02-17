@@ -12,6 +12,8 @@ import { PracticeTimePipe } from './practice-time.pipe';
 import { PracticesChartComponent } from './practices-chart/practices-chart.component';
 import { CreateMusicalPieceComponent } from './create-musical-piece/create-musical-piece.component';
 import { FormsModule } from '@angular/forms';
+import { PracticesListComponent } from './practices-list/practices-list.component';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { FormsModule } from '@angular/forms';
     MusicalPieceDetailComponent,
     PracticeTimePipe,
     PracticesChartComponent,
-    CreateMusicalPieceComponent
+    CreateMusicalPieceComponent,
+    PracticesListComponent,
+    ReportComponent
   ],
   imports: [
     ChartsModule,

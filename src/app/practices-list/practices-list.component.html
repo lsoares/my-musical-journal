@@ -1,0 +1,8 @@
+<table>
+  <tr *ngFor="let practice of practices">
+    <td>{{ practice.startDate.toLocaleDateString() }}</td>
+    <td>-</td>
+    <td>{{ practice | practiceTime }}</td>
+    <td title="Delete practice" class='delete-icon' (click)="onDeletingPractice(practice.id)">✖</td>
+  </tr>
+</table>

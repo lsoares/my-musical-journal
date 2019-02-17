@@ -48,8 +48,4 @@ export class MusicalPieceDetailComponent implements OnInit {
   onStopping() {
     this.musicalPieceService.stopPractice(this.musicalPiece.id);
   }
-
-  onDeletingPractice(id: number) {
-    this.musicalPieceService.deletePractice(this.musicalPiece.id, id);
-  }
 }

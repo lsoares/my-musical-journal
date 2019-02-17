@@ -13,9 +13,8 @@ export class PracticeTimePipe implements PipeTransform {
 
   convertMinsToHrsMins(mins) {
     const h = Math.floor(mins / 60);
-    const m = mins % 60;
     const hStr = h ? `${h}h;` : '';
-    const mStr = (m < 10 ? '0' + m : m) + 'm';
+    const mStr = `${mins % 60}m`;
     return `${hStr}${mStr}`;
   }
 }

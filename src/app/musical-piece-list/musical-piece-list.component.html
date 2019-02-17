@@ -1,10 +1,17 @@
 <h3 routerLink='/'>My Music Journal</h3>
+
+<i class="material-icons" *ngIf="musicalPieces.length"
+	routerLink="/report" title='View report'>
+	equalizer
+</i>
+
 <mat-list *ngFor="let piece of musicalPieces, last as last">
 	<mat-list-item routerLink='/pieces/{{ piece.id }}'>
 		{{ piece.title }}, {{ piece.composer }}
 	</mat-list-item>
 	<mat-divider *ngIf="!last"></mat-divider>
 </mat-list>
+
 <i class="material-icons" *ngIf="!creating"
    (click)="creating = !creating" title='Create musical piece'>
 	add_circle_outline

@@ -5,11 +5,9 @@
   Start ▶
 </button>
 <button mat-raised-button color="primary" (click)="onStopping()" *ngIf="isStarted()">
-  Stop ⏹
+  ({{ getLastPractice() | practiceTime }}) Stop ⏹
 </button>
-<div *ngIf="isStarted()">
-  {{ getLastPractice() | practiceTime }}
-</div>
+
 <app-practices-chart
   [musicalPiece]="musicalPiece"
   [practices]="getPractices()">

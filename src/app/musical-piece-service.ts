@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MusicalPiece } from './model/musical-piece';
 import { Practice } from './model/practice';
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,21 +25,27 @@ export class MusicalPieceService {
     return newMusicalPiece.id;
   }
 
-  deleteMusicalPiece(id: number): any {
+  deleteMusicalPiece(id: number) {
     const musicalPieces = this.getMusicalPieces()
       .filter(piece => piece.id !== id);
     localStorage.setItem('musicalPieces', JSON.stringify(musicalPieces));
     localStorage.removeItem(id.toString()); // remove practices
   }
 
-  startPractice(musicalPieceId: number): any {
+  createPractice(musicalPieceId: number, startDate: Date, endDate: Date) {
+    const practices = this.loadPractices(musicalPieceId);
+    practices.push(new Practice(new Date().valueOf(), startDate, endDate));
+    this.storePractices(musicalPieceId, practices);
+  }
+
+  startPractice(musicalPieceId: number) {
     const practices = this.loadPractices(musicalPieceId);
     // TODO: stop other practice running!
     practices.push(new Practice(new Date().valueOf()));
     this.storePractices(musicalPieceId, practices);
   }
 
-  stopPractice(musicalPieceId: number): any {
+  stopPractice(musicalPieceId: number) {
     const practices = this.loadPractices(musicalPieceId);
     if (!practices.length) {
       throw (new Error(`No practice started for musical piece ${musicalPieceId}`));
@@ -68,6 +73,7 @@ export class MusicalPieceService {
   }
 
   private storePractices(musicalPieceId: number, practices: Practice[]) {
+    // TODO: sort by startDate!
     localStorage.setItem(musicalPieceId.toString(), JSON.stringify(practices));
   }
 }

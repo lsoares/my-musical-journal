@@ -20,9 +20,7 @@ export class CreateMusicalPieceComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(createForm: HTMLFormElement) {
-    if (!createForm.checkValidity()) { return; }
-
+  onSubmitCreateMusicalPiece() {
     const id = this.musicalPieceService.createMusicalPiece(this.musicalPiece);
     this.router.navigate(['pieces', id]);
   }

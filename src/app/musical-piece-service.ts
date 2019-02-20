@@ -10,7 +10,11 @@ export class MusicalPieceService {
   constructor() { }
 
   getMusicalPieces(): MusicalPiece[] {
-    return JSON.parse(localStorage.getItem('musicalPieces') || '[]');
+    let pieces = JSON.parse(localStorage.getItem('musicalPieces') || '[]');
+    pieces = pieces.map(musicalPiece =>
+      new MusicalPiece(musicalPiece.id, musicalPiece.title, musicalPiece.composer, this.loadPractices(musicalPiece.id))
+    );
+    return pieces;
   }
 
   getMusicalPiece(id: number): MusicalPiece {

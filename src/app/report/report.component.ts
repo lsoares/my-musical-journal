@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MusicalPiece } from '../model/musical-piece';
+import { MusicalPieceService } from '../musical-piece-service';
 
 @Component({
   selector: 'app-report',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportComponent implements OnInit {
 
-  constructor() { }
+  musicalPieces: MusicalPiece[];
+
+  constructor(private readonly musicalPieceService: MusicalPieceService) { }
 
   ngOnInit() {
+    this.musicalPieces = this.musicalPieceService.getMusicalPieces();
   }
-
 }

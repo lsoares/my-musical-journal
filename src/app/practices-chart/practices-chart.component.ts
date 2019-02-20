@@ -10,38 +10,47 @@ import { MusicalPiece } from '../model/musical-piece';
 })
 export class PracticesChartComponent implements OnInit {
 
-  @Input() musicalPiece: MusicalPiece;
+  @Input() musicalPieces: MusicalPiece[];
 
-  barChartOptions: any = { scaleShowVerticalLines: false, responsive: false };
+  barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: false,
+    scales: {
+      xAxes: [{ stacked: true }],
+      yAxes: [{ stacked: true }]
+    }
+  };
   barChartLabels: string[] = [];
   barChartType = 'bar';
   barChartLegend = true;
-  barChartData: any[] = [ { data: [], label: '' } ];
+  barChartData: any[] = [];
 
   constructor() { }
 
   ngOnInit() {
-    this.barChartData[0].label = this.musicalPiece.title;
     const size = 15;
     // labels
-    for (let i = size; i > 0; i--) {
+    for (let j = size; j > 0; j--) {
       const d = new Date();
-      d.setDate(d.getDate() - i + 1);
+      d.setDate(d.getDate() - j + 1);
       d.setHours(0, 0, 0, 0);
       this.barChartLabels.push(moment(d).format('Do MMM'));
     }
     // data
-    this.barChartData[0].data = Array(size).fill(0);
-    this.musicalPiece.practices.forEach(practice => {
-      const minutes = Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
-      const dayOffset = Math.round((new Date().getTime() - practice.startDate.getTime()) / (1000 * 60 * 60 * 24));
-      this.barChartData[0].data[size - dayOffset - 1] += minutes;
+    this.musicalPieces.forEach((musicalPiece, i) => {
+      this.barChartData[i] = {};
+      this.barChartData[i].label = musicalPiece.title;
+
+      this.barChartData[i].data = Array(size).fill(0);
+      musicalPiece.practices.forEach(practice => {
+        const minutes = Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
+        const dayOffset = Math.round((new Date().getTime() - practice.startDate.getTime()) / (1000 * 60 * 60 * 24));
+        this.barChartData[i].data[size - dayOffset - 1] += minutes;
+      });
     });
   }
 
-  chartClicked(e: any): void {
-  }
+  chartClicked(e: any) {}
 
-  chartHovered(e: any): void {
-  }
+  chartHovered(e: any) {}
 }

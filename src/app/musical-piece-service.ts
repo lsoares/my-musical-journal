@@ -26,15 +26,15 @@ export class MusicalPieceService {
   }
 
   deleteMusicalPiece(id: number) {
-    const musicalPieces = this.getMusicalPieces()
-      .filter(piece => piece.id !== id);
+    const musicalPieces = this.getMusicalPieces().filter(piece => piece.id !== id);
     localStorage.setItem('musicalPieces', JSON.stringify(musicalPieces));
     localStorage.removeItem(id.toString()); // remove practices
   }
 
   createPractice(musicalPieceId: number, startDate: Date, endDate: Date) {
-    const practices = this.loadPractices(musicalPieceId);
+    let practices = this.loadPractices(musicalPieceId);
     practices.push(new Practice(new Date().valueOf(), startDate, endDate));
+    practices = practices.sort((p1, p2) => p1.startDate.getDate() - p2.startDate.getTime());
     this.storePractices(musicalPieceId, practices);
   }
 

@@ -16,6 +16,7 @@ export class PracticeTimePipe implements PipeTransform {
     const m = mins % 60;
     const hStr = h ? `${h}h;` : '';
     const mStr = m ? `${mins % 60}m` : '';
+    if (!h && !m) { return 0; }
     return `${hStr}${mStr}`;
   }
 }

@@ -1,8 +1,9 @@
 <form (ngSubmit)="onSubmitCreatePractice()" ngNativeValidate>
   <table>
     <tr *ngFor="let practice of practices">
-      <td>{{ practice.startDate.toLocaleDateString() }}</td>
-      <td>-</td>
+      <td [title]="practice.startDate">
+        {{ practice.startDate.toLocaleDateString() }}
+      </td>
       <td>{{ practice | practiceTime }}</td>
       <td>
         <span title="Delete session" class='icon' (click)="onDeletingPractice(practice.id)">✖</span>
@@ -13,7 +14,6 @@
         <input [(ngModel)]='practiceModel.date' type="date" placeholder="Date"
                 maxlength="6" name='date' required  />
       </td>
-      <td>-</td>
       <td>
         <input type="number" [(ngModel)]="practiceModel.duration" name='duration' placeholder="Duration (minutes)"
                 min="5" max="500" maxlength="4" size="4" required />

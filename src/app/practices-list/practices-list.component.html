@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmitCreatePractice()" ngNativeValidate>
   <table>
-    <tr *ngFor="let practice of practices">
+    <tr *ngFor="let practice of musicalPiece.practices">
       <td [title]="practice.startDate">
         {{ practice.startDate.toLocaleDateString() }}
       </td>

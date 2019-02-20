@@ -14,12 +14,14 @@ export class MusicalPieceService {
   }
 
   getMusicalPiece(id: number): MusicalPiece {
-    return this.getMusicalPieces().find(piece => piece.id === id);
+    const musicalPiece = this.getMusicalPieces().find(piece => piece.id === id);
+    if (!musicalPiece) { return null; }
+    return new MusicalPiece(musicalPiece.id, musicalPiece.title, musicalPiece.composer, this.loadPractices(musicalPiece.id));
   }
 
   createMusicalPiece({ title, composer }) {
     const musicalPieces = this.getMusicalPieces();
-    const newMusicalPiece = new MusicalPiece(new Date().valueOf(), title, composer);
+    const newMusicalPiece = new MusicalPiece(new Date().valueOf(), title, composer, []);
     musicalPieces.push(newMusicalPiece);
     localStorage.setItem('musicalPieces', JSON.stringify(musicalPieces));
     return newMusicalPiece.id;
@@ -61,7 +63,7 @@ export class MusicalPieceService {
     this.storePractices(musicalPieceId, practices);
   }
 
-  loadPractices(musicalPieceId: number): Practice[] {
+  private loadPractices(musicalPieceId: number): Practice[] {
     return JSON.parse(localStorage.getItem(musicalPieceId.toString()) || '[]')
       .map((practice: Practice) =>
         new Practice(

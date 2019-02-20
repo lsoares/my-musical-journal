@@ -28,12 +28,8 @@ export class MusicalPieceDetailComponent implements OnInit {
     }
   }
 
-  getPractices(): Practice[] {
-    return this.musicalPieceService.loadPractices(this.musicalPiece.id);
-  }
-
   getLastPractice(): Practice | null {
-    const practices = this.getPractices();
+    const practices = this.musicalPiece.practices;
     return practices.length ? practices[practices.length - 1] : null;
   }
 
@@ -43,9 +39,11 @@ export class MusicalPieceDetailComponent implements OnInit {
 
   onStarting() {
     this.musicalPieceService.startPractice(this.musicalPiece.id);
+    this.ngOnInit();
   }
 
   onStopping() {
     this.musicalPieceService.stopPractice(this.musicalPiece.id);
+    this.ngOnInit();
   }
 }

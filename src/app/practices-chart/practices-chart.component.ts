@@ -11,7 +11,6 @@ import { MusicalPiece } from '../model/musical-piece';
 export class PracticesChartComponent implements OnInit {
 
   @Input() musicalPiece: MusicalPiece;
-  @Input() practices: Practice[];
 
   barChartOptions: any = { scaleShowVerticalLines: false, responsive: false };
   barChartLabels: string[] = [];
@@ -33,7 +32,7 @@ export class PracticesChartComponent implements OnInit {
     }
     // data
     this.barChartData[0].data = Array(size).fill(0);
-    this.practices.forEach(practice => {
+    this.musicalPiece.practices.forEach(practice => {
       const minutes = Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
       const dayOffset = Math.round((new Date().getTime() - practice.startDate.getTime()) / (1000 * 60 * 60 * 24));
       this.barChartData[0].data[size - dayOffset - 1] += minutes;

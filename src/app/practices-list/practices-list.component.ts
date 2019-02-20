@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MusicalPiece } from '../model/musical-piece';
 import { MusicalPieceService } from '../musical-piece-service';
 import { Practice } from '../model/practice';
 import * as moment from 'moment';
+import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
 
 @Component({
   selector: 'app-practices-list',
@@ -12,7 +13,7 @@ import * as moment from 'moment';
 export class PracticesListComponent implements OnInit {
 
   @Input() musicalPiece: MusicalPiece;
-  @Input() practices: Practice[];
+  @Output() changedList = new EventEmitter<boolean>();
 
   creatingPractice = true;
   practiceModel: any = {};
@@ -25,6 +26,7 @@ export class PracticesListComponent implements OnInit {
   onDeletingPractice(id: number) {
     if (confirm(`Delete practice session?`)) {
       this.musicalPieceService.deletePractice(this.musicalPiece.id, id);
+      this.changedList.emit(true);
     }
   }
 
@@ -34,5 +36,6 @@ export class PracticesListComponent implements OnInit {
 
     this.musicalPieceService.createPractice(this.musicalPiece.id, startDate, endDate);
     this.practiceModel = {};
+    this.changedList.emit(true);
   }
 }

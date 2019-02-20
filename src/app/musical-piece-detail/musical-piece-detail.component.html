@@ -12,12 +12,8 @@
   ({{ getLastPractice() | practiceTime }}) Stop ⏹
 </button>
 
-<app-practices-chart
-  [musicalPiece]="musicalPiece"
-  [practices]="getPractices()">
+<app-practices-chart [musicalPiece]="musicalPiece">
 </app-practices-chart>
 
-<app-practices-list
-  [musicalPiece]="musicalPiece"
-  [practices]="getPractices()">
+<app-practices-list [musicalPiece]="musicalPiece" (changedList)="ngOnInit()">
 </app-practices-list>

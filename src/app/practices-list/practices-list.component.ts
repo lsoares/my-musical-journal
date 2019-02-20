@@ -33,6 +33,6 @@ export class PracticesListComponent implements OnInit {
     const endDate = moment(startDate).add(this.practiceModel.duration, 'm').toDate();
 
     this.musicalPieceService.createPractice(this.musicalPiece.id, startDate, endDate);
-    this.creatingPractice = false;
+    this.practiceModel = {};
   }
 }

@@ -1,4 +1,4 @@
-<form (ngSubmit)="f.form.valid && onSubmitCreateMusicalPiece()" #f>
+<form (ngSubmit)="onSubmitCreateMusicalPiece()" ngNativeValidate>
   <mat-form-field>
     <input matInput placeholder="Title" required pattern=".{3,}"
            [(ngModel)]="musicalPiece.title" name="title">

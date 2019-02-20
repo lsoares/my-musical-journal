@@ -1,5 +1,9 @@
 <i class="material-icons" routerLink='/'>home</i>
-<h3>{{ musicalPiece.title }}, {{ musicalPiece.composer }}</h3>
+<h3>{{ musicalPiece.title }}, {{ musicalPiece.composer }}
+  <i class="material-icons" (click)="onDeleteMusicalPiece()" title="Delete musical piece" style="float:right;opacity:0.5">
+    delete
+  </i>
+</h3>
 
 <button mat-raised-button color="primary" (click)="onStarting()" *ngIf="!isStarted()">
   Start ▶
@@ -17,7 +21,3 @@
   [musicalPiece]="musicalPiece"
   [practices]="getPractices()">
 </app-practices-list>
-
-<i class="material-icons" (click)="onDeleteMusicalPiece()" title="Delete musical piece">
-  delete
-</i>

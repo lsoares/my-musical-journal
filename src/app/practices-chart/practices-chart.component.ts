@@ -17,7 +17,7 @@ export class PracticesChartComponent implements OnInit {
     responsive: false,
     scales: {
       xAxes: [{ stacked: true }],
-      yAxes: [{ stacked: true }]
+      yAxes: [{ stacked: true, ticks: { suggestedMin: 0 } }]
     }
   };
   barChartLabels: string[] = [];

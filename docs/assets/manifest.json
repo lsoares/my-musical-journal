@@ -8,7 +8,7 @@
       "type": "image/ico"
     }
   ],
-  "start_url": "/my-musical-journal",
+  "start_url": "../my-musical-journal",
   "display": "standalone",
   "orientation": "portrait"
 }

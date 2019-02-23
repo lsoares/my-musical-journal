@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Practice } from '../model/practice';
 import * as moment from 'moment';
 import { MusicalPiece } from '../model/musical-piece';
 
@@ -11,6 +10,8 @@ import { MusicalPiece } from '../model/musical-piece';
 export class PracticesChartComponent implements OnInit {
 
   @Input() musicalPieces: MusicalPiece[];
+  // TODO update chart when practices change https://angular.io/api/core/ChangeDetectorRef
+  @Input() days;
 
   barChartOptions: any = {
     scaleShowVerticalLines: false,
@@ -28,11 +29,10 @@ export class PracticesChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const size = 15;
     // labels
-    for (let j = size; j > 0; j--) {
+    for (let i = this.days; i > 0; i--) {
       const d = new Date();
-      d.setDate(d.getDate() - j + 1);
+      d.setDate(d.getDate() - i + 1);
       d.setHours(0, 0, 0, 0);
       this.barChartLabels.push(moment(d).format('Do MMM'));
     }
@@ -41,11 +41,11 @@ export class PracticesChartComponent implements OnInit {
       this.barChartData[i] = {};
       this.barChartData[i].label = musicalPiece.title;
 
-      this.barChartData[i].data = Array(size).fill(0);
+      this.barChartData[i].data = Array(this.days).fill(0);
       musicalPiece.practices.forEach(practice => {
         const minutes = Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
         const dayOffset = Math.round((new Date().getTime() - practice.startDate.getTime()) / (1000 * 60 * 60 * 24));
-        this.barChartData[i].data[size - dayOffset - 1] += minutes;
+        this.barChartData[i].data[this.days - dayOffset - 1] += minutes;
       });
     });
   }

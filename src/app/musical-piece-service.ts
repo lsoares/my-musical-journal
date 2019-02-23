@@ -38,9 +38,8 @@ export class MusicalPieceService {
   }
 
   createPractice(musicalPieceId: number, startDate: Date, endDate: Date) {
-    let practices = this.loadPractices(musicalPieceId);
+    const practices = this.loadPractices(musicalPieceId);
     practices.push(new Practice(new Date().valueOf(), startDate, endDate));
-    practices = practices.sort((p1, p2) => p1.startDate.getDate() - p2.startDate.getTime());
     this.storePractices(musicalPieceId, practices);
   }
 
@@ -79,7 +78,7 @@ export class MusicalPieceService {
   }
 
   private storePractices(musicalPieceId: number, practices: Practice[]) {
-    // TODO: sort by startDate!
+    practices = practices.sort((p1, p2) => p1.startDate.getTime() - p2.startDate.getTime());
     localStorage.setItem(musicalPieceId.toString(), JSON.stringify(practices));
   }
 }

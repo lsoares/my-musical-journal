@@ -1,5 +1,8 @@
 <i class="material-icons" routerLink='/'>home</i>
 <h3>Report</h3>
 
-<app-practices-chart [musicalPieces]="musicalPieces">
+<app-practices-chart [musicalPieces]="musicalPieces" [days]="days">
 </app-practices-chart>
+
+In the last {{ days }} days, you practiced {{ totalMinutes}} min;<br/>
+{{ minutesPerDay }} minutes per day.

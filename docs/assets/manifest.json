@@ -3,12 +3,12 @@
   "name": "My Music Practices Journal",
   "icons": [
     {
-      "src": "my-musical-journal/assets/music-256.png",
+      "src": "/my-musical-journal/assets/music-256.png",
       "sizes": "192x192",
       "type": "image/ico"
     }
   ],
-  "start_url": "my-musical-journal",
+  "start_url": "my-musical-journal/pieces",
   "display": "standalone",
   "orientation": "portrait"
 }

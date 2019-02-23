@@ -3,7 +3,7 @@
   "name": "My Music Practices Journal",
   "icons": [
     {
-      "src": "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/music-256.png",
+      "src": "music-256.png",
       "sizes": "192x192",
       "type": "image/ico"
     }

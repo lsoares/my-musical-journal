@@ -10,7 +10,7 @@ Add it to your mobile phone desktop.
 
 ## Development
 Currently deployed in GitHub pages. You can fork it and deploy it on your own.
-Run `npm start deploy` to deploy it (served from `docs/`).
+Run `npm run deploy` to deploy it (served from `docs/`).
 
 Created with Angular 7.
 

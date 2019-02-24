@@ -20,22 +20,16 @@ export class ReportComponent implements OnInit {
   ngOnInit() {
     this.musicalPieces = this.musicalPieceService.getMusicalPieces();
 
-    const filterPracticesFromLastXDays =
-      (practice: Practice) => {
+    const filterPracticesFromLastXDays = (practice: Practice) => {
         const daysOffset = (new Date().getTime() - practice.startDate.getTime()) / (1000 * 60 * 60 * 24);
         return daysOffset >= 0 && daysOffset < this.days;
       };
 
-    const sumPracticesTime =
-      (acc: number, practice: Practice) => {
-        return acc + ((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (1000 * 60);
-      };
+    const sumPracticesTime = (acc: number, practice: Practice) =>
+        acc + ((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (1000 * 60);
 
-    const sumTotalTime =
-      (totalAcc: number, musicalPiece: MusicalPiece) => {
-        console.log(musicalPiece, musicalPiece.practices.filter(filterPracticesFromLastXDays).reduce(sumPracticesTime, 0));
-        return totalAcc + musicalPiece.practices.filter(filterPracticesFromLastXDays).reduce(sumPracticesTime, 0);
-      };
+    const sumTotalTime = (totalAcc: number, musicalPiece: MusicalPiece) =>
+        totalAcc + musicalPiece.practices.filter(filterPracticesFromLastXDays).reduce(sumPracticesTime, 0);
 
     this.totalMinutes = Math.round(this.musicalPieces.reduce(sumTotalTime, 0));
     this.minutesPerDay = this.totalMinutes / this.days;

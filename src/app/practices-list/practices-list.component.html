@@ -2,7 +2,7 @@
   <table>
     <tr *ngFor="let practice of musicalPiece.practices">
       <td [title]="practice.startDate">
-        {{ practice.startDate.toLocaleDateString() }}
+        {{ formatDate(practice.startDate) }}
       </td>
       <td>{{ practice | practiceTime }}</td>
       <td>

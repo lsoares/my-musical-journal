@@ -5,7 +5,7 @@
 	equalizer
 </i>
 
-<mat-list *ngFor="let piece of musicalPieces, last as last">
+<mat-list *ngFor="let piece of musicalPieces, last as last" class="musical-pieces">
 	<mat-list-item routerLink='/pieces/{{ piece.id }}'>
 		{{ piece.title }}, {{ piece.composer }}
 	</mat-list-item>

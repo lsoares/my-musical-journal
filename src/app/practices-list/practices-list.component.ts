@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MusicalPiece } from '../model/musical-piece';
 import { MusicalPieceService } from '../musical-piece-service';
-import { Practice } from '../model/practice';
 import * as moment from 'moment';
-import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
 
 @Component({
   selector: 'app-practices-list',
@@ -37,5 +35,9 @@ export class PracticesListComponent implements OnInit {
     this.musicalPieceService.createPractice(this.musicalPiece.id, startDate, endDate);
     this.practiceModel = {};
     this.changedList.emit(true);
+  }
+
+  formatDate(date: Date) {
+    return moment(date).format('D MMM YY');
   }
 }

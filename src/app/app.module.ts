@@ -14,6 +14,7 @@ import { CreateMusicalPieceComponent } from './create-musical-piece/create-music
 import { FormsModule } from '@angular/forms';
 import { PracticesListComponent } from './practices-list/practices-list.component';
 import { ReportComponent } from './report/report.component';
+import { DebugComponent } from './debug/debug.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReportComponent } from './report/report.component';
     PracticesChartComponent,
     CreateMusicalPieceComponent,
     PracticesListComponent,
-    ReportComponent
+    ReportComponent,
+    DebugComponent
   ],
   imports: [
     ChartsModule,

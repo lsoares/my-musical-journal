@@ -15,7 +15,7 @@ export class PracticesChartComponent implements OnInit {
 
   barChartOptions: any = {
     scaleShowVerticalLines: false,
-    responsive: false,
+    responsive: true,
     scales: {
       xAxes: [{ stacked: true }],
       yAxes: [{ stacked: true, ticks: { suggestedMin: 0 } }]

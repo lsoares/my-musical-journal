@@ -10,17 +10,17 @@ export class MusicalPieceService {
   constructor() { }
 
   getMusicalPieces(): MusicalPiece[] {
-    let pieces = JSON.parse(localStorage.getItem('musicalPieces') || '[]');
-    pieces = pieces.map(musicalPiece =>
-      new MusicalPiece(musicalPiece.id, musicalPiece.title, musicalPiece.composer, this.loadPractices(musicalPiece.id))
+    const pieces = JSON.parse(localStorage.getItem('musicalPieces') || '[]');
+    return pieces.map(musicalPiece =>
+      new MusicalPiece(
+        musicalPiece.id, musicalPiece.title, musicalPiece.composer,
+        musicalPiece.practices.map(this.fixPracticesDates) || this.loadPractices(musicalPiece.id)
+      )
     );
-    return pieces;
   }
 
   getMusicalPiece(id: number): MusicalPiece {
-    const musicalPiece = this.getMusicalPieces().find(piece => piece.id === id);
-    if (!musicalPiece) { return null; }
-    return new MusicalPiece(musicalPiece.id, musicalPiece.title, musicalPiece.composer, this.loadPractices(musicalPiece.id));
+    return this.getMusicalPieces().find(piece => piece.id === id);
   }
 
   createMusicalPiece({ title, composer }) {
@@ -50,6 +50,7 @@ export class MusicalPieceService {
     this.storePractices(musicalPieceId, practices);
   }
 
+  // TODO: store all together
   stopPractice(musicalPieceId: number) {
     const practices = this.loadPractices(musicalPieceId);
     if (!practices.length) {
@@ -62,19 +63,20 @@ export class MusicalPieceService {
 
   deletePractice(musicalPieceId: number, practiceId: number) {
     const practices = this.loadPractices(musicalPieceId)
-        .filter(practice => practice.id !== practiceId);
+      .filter(practice => practice.id !== practiceId);
     this.storePractices(musicalPieceId, practices);
   }
 
+  private fixPracticesDates(practice: Practice) {
+    return new Practice(
+      practice.id,
+      practice.startDate && new Date(practice.startDate),
+      practice.endDate && new Date(practice.endDate)
+    );
+  }
+
   private loadPractices(musicalPieceId: number): Practice[] {
-    return JSON.parse(localStorage.getItem(musicalPieceId.toString()) || '[]')
-      .map((practice: Practice) =>
-        new Practice(
-          practice.id,
-          practice.startDate && new Date(practice.startDate),
-          practice.endDate && new Date(practice.endDate)
-        )
-      );
+    return JSON.parse(localStorage.getItem(musicalPieceId.toString()) || '[]').map(this.fixPracticesDates);
   }
 
   private storePractices(musicalPieceId: number, practices: Practice[]) {

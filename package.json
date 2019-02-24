@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ng build --aot --prod --output-path docs --base-href /my-musical-journal/ && cp docs/index.html docs/404.html",
-    "deploy": "npm run postinstall && git add docs/* && git commit -m 'Deploy' && git push"
+    "deploy": "npm run postinstall && git add docs/* && git commit -m Deploy && git push"
   },
   "private": true,
   "dependencies": {

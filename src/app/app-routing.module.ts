@@ -3,12 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { MusicalPieceDetailComponent } from './musical-piece-detail/musical-piece-detail.component';
 import { MusicalPieceListComponent } from './musical-piece-list/musical-piece-list.component';
 import { ReportComponent } from './report/report.component';
+import { DebugComponent } from './debug/debug.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/pieces', pathMatch: 'full' },
   { path: 'pieces', component: MusicalPieceListComponent },
   { path: 'pieces/:id', component: MusicalPieceDetailComponent },
-  { path: 'report', component: ReportComponent }
+  { path: 'report', component: ReportComponent },
+  { path: 'debug', component: DebugComponent }
 ];
 
 @NgModule({

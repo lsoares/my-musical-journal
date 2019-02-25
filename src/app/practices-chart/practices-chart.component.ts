@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { MusicalPiece } from '../model/musical-piece';
+import { Practice } from '../model/practice';
 
 @Component({
   selector: 'app-practices-chart',
@@ -31,10 +32,10 @@ export class PracticesChartComponent implements OnInit {
   ngOnInit() {
     // labels
     for (let i = this.days; i > 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i + 1);
-      d.setHours(0, 0, 0, 0);
-      this.barChartLabels.push(moment(d).format('Do MMM'));
+      const date = new Date();
+      date.setDate(date.getDate() - i + 1);
+      date.setHours(0, 0, 0, 0);
+      this.barChartLabels.push(moment(date).format('Do MMM'));
     }
     // data
     this.musicalPieces.forEach((musicalPiece, i) => {
@@ -43,11 +44,22 @@ export class PracticesChartComponent implements OnInit {
 
       this.barChartData[i].data = Array(this.days).fill(0);
       musicalPiece.practices.forEach(practice => {
-        const minutes = Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
-        const dayOffset = Math.round((new Date().getTime() - practice.startDate.getTime()) / (1000 * 60 * 60 * 24));
-        this.barChartData[i].data[this.days - dayOffset - 1] += minutes;
+        const dayOffset = Math.round((
+          this.atMidNight(new Date()).getTime() - this.atMidNight(practice.startDate).getTime()) / (1000 * 60 * 60 * 24)
+        );
+        this.barChartData[i].data[this.days - dayOffset - 1] += this.getDuration(practice);
       });
     });
+  }
+
+  getDuration(practice: Practice) {
+    return Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
+  }
+
+  atMidNight(date: Date) {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d;
   }
 
   chartClicked(e: any) {}

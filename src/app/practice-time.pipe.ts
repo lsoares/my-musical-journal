@@ -7,8 +7,11 @@ import { Practice } from './model/practice';
 export class PracticeTimePipe implements PipeTransform {
 
   transform(practice: Practice, args?: any): any {
-    const minutes = Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
-    return this.convertMinsToHrsMins(minutes);
+    return this.convertMinsToHrsMins(this.getDuration(practice));
+  }
+
+  getDuration(practice: Practice) {
+    return Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
   }
 
   convertMinsToHrsMins(mins) {

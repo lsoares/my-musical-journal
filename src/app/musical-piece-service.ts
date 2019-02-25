@@ -44,7 +44,9 @@ export class MusicalPieceService {
 
   startPractice(musicalPieceId: number) {
     const musicalPieces = JSON.parse(localStorage.getItem('musicalPieces') || '[]');
-    musicalPieces.forEach(musicalPiece => this.stopPractice(musicalPiece.id)); // stop the others
+    musicalPieces // stop the others
+      .filter(musicalPiece => musicalPiece.id !== musicalPieceId)
+      .forEach(musicalPiece => this.stopPractice(musicalPiece.id));
     const practices = this.loadPractices(musicalPieceId);
     practices.push(new Practice(new Date().valueOf()));
     this.storePractices(musicalPieceId, practices);

@@ -29,8 +29,7 @@ export class MusicalPieceDetailComponent implements OnInit {
   }
 
   getLastPractice(): Practice | null {
-    const practices = this.musicalPiece.practices;
-    return practices.length ? practices[practices.length - 1] : null;
+    return this.musicalPiece.practices.find(practice => practice.endDate == null);
   }
 
   isStarted(): boolean {

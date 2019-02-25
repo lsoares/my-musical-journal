@@ -24,7 +24,7 @@ export class MusicalPieceService {
 
   createMusicalPiece({ title, composer }) {
     const musicalPieces = this.getMusicalPieces();
-    const newMusicalPiece = new MusicalPiece(new Date().valueOf(), title, composer, []);
+    const newMusicalPiece = new MusicalPiece(new Date().valueOf(), title, composer);
     musicalPieces.push(newMusicalPiece);
     localStorage.setItem('musicalPieces', JSON.stringify(musicalPieces));
     return newMusicalPiece.id;
@@ -54,10 +54,12 @@ export class MusicalPieceService {
 
   stopPractice(musicalPieceId: number) {
     const practices = this.loadPractices(musicalPieceId);
-    if (!practices.length) { return; }
-    const lastPractice = practices.pop();
-    practices.push(new Practice(lastPractice.id, lastPractice.startDate, new Date()));
-    this.storePractices(musicalPieceId, practices);
+    const lastPractice = practices.find(practice => practice.endDate == null);
+    if (!lastPractice) { return; }
+
+    const newPractices = practices.filter(practice => practice.id !== lastPractice.id);
+    newPractices.push(new Practice(lastPractice.id, lastPractice.startDate, new Date()));
+    this.storePractices(musicalPieceId, newPractices);
   }
 
   deletePractice(musicalPieceId: number, practiceId: number) {

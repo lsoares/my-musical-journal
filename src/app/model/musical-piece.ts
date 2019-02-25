@@ -6,6 +6,6 @@ export class MusicalPiece {
       readonly id: number,
       readonly title: string,
       readonly composer: string,
-      readonly practices: Practice[]
+      readonly practices: Practice[] = []
    ) { }
 }

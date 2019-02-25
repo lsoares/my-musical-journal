@@ -13,13 +13,15 @@ export class PracticesChartComponent implements OnInit {
   @Input() musicalPieces: MusicalPiece[];
   // TODO update chart when practices change https://angular.io/api/core/ChangeDetectorRef
   @Input() days;
+  @Input() showLegend;
 
   barChartOptions: any = {
+    legend: { display: false },
     scaleShowVerticalLines: false,
     responsive: true,
     scales: {
       xAxes: [{ stacked: true }],
-      yAxes: [{ stacked: true, ticks: { suggestedMin: 0 } }]
+      yAxes: [{ stacked: true, ticks: { suggestedMin: 0, suggestedMax: 30 } }]
     }
   };
   barChartLabels: string[] = [];
@@ -30,6 +32,7 @@ export class PracticesChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.barChartOptions.legend.display = this.showLegend;
     // labels
     for (let i = this.days; i > 0; i--) {
       const date = new Date();

@@ -13,8 +13,7 @@ export class MusicalPieceService {
     const pieces = JSON.parse(localStorage.getItem('musicalPieces') || '[]');
     return pieces.map(musicalPiece =>
       new MusicalPiece(
-        musicalPiece.id, musicalPiece.title, musicalPiece.composer,
-        musicalPiece.practices.map(this.fixPracticesDates) || this.loadPractices(musicalPiece.id)
+        musicalPiece.id, musicalPiece.title, musicalPiece.composer, this.loadPractices(musicalPiece.id)
       )
     );
   }
@@ -44,18 +43,16 @@ export class MusicalPieceService {
   }
 
   startPractice(musicalPieceId: number) {
+    const musicalPieces = JSON.parse(localStorage.getItem('musicalPieces') || '[]');
+    musicalPieces.forEach(musicalPiece => this.stopPractice(musicalPiece.id)); // stop the others
     const practices = this.loadPractices(musicalPieceId);
-    // TODO: stop other practice running!
     practices.push(new Practice(new Date().valueOf()));
     this.storePractices(musicalPieceId, practices);
   }
 
-  // TODO: store all together
   stopPractice(musicalPieceId: number) {
     const practices = this.loadPractices(musicalPieceId);
-    if (!practices.length) {
-      throw (new Error(`No practice started for musical piece ${musicalPieceId}`));
-    }
+    if (!practices.length) { return; }
     const lastPractice = practices.pop();
     practices.push(new Practice(lastPractice.id, lastPractice.startDate, new Date()));
     this.storePractices(musicalPieceId, practices);

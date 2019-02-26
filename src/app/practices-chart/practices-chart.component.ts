@@ -37,8 +37,7 @@ export class PracticesChartComponent implements OnInit {
     for (let i = this.days; i > 0; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i + 1);
-      date.setHours(0, 0, 0, 0);
-      this.barChartLabels.push(moment(date).format('Do MMM'));
+      this.barChartLabels.push(moment(this.atMidNight(date)).format('Do MMM'));
     }
     // data
     this.musicalPieces.forEach((musicalPiece, i) => {

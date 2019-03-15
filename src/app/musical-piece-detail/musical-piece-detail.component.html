@@ -1,8 +1,9 @@
 <h3>
   <span routerLink='/'>My Music Journal</span> ⇾ <span>{{ musicalPiece.title }}, {{ musicalPiece.composer }}</span>
-  <i class="material-icons" (click)="onDeleteMusicalPiece()" title="Delete musical piece" style="float:right;opacity:0.5">
-      delete
-    </i>
+  <i class="material-icons" (click)="onDeleteMusicalPiece()" title="Delete musical piece"
+     style="float:right;opacity:0.5">
+    delete
+  </i>
 </h3>
 
 <button mat-raised-button color="primary" (click)="onStarting()" *ngIf="!isStarted()">

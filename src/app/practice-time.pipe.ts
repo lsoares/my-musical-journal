@@ -6,20 +6,22 @@ import { Practice } from './model/practice';
 })
 export class PracticeTimePipe implements PipeTransform {
 
-  transform(practice: Practice, args?: any): any {
-    return this.convertMinsToHrsMins(this.getDuration(practice));
-  }
-
-  getDuration(practice: Practice) {
+  static getDuration(practice: Practice) {
     return Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
   }
 
-  convertMinsToHrsMins(mins) {
+  static convertMinsToHrsMins(mins) {
     const h = Math.floor(mins / 60);
     const m = mins % 60;
     const hStr = h ? `${h}h;` : '';
     const mStr = m ? `${mins % 60}m` : '';
-    if (!h && !m) { return 0; }
+    if (!h && !m) {
+      return 0;
+    }
     return `${hStr}${mStr}`;
+  }
+
+  transform(practice: Practice, args?: any): any {
+    return PracticeTimePipe.convertMinsToHrsMins(PracticeTimePipe.getDuration(practice));
   }
 }

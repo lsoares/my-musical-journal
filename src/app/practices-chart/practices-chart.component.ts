@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { MusicalPiece } from '../model/musical-piece';
-import { Practice } from '../model/practice';
+import { PracticeTimePipe } from '../practice-time.pipe';
 
 @Component({
   selector: 'app-practices-chart',
@@ -28,7 +28,8 @@ export class PracticesChartComponent implements OnInit {
   barChartLegend = true;
   barChartData: any[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.barChartOptions.legend.display = this.showLegend;
@@ -47,8 +48,8 @@ export class PracticesChartComponent implements OnInit {
       musicalPiece.practices.forEach(practice => {
         const dayOffset = Math.round((
           this.atMidNight(new Date()).getTime() - this.atMidNight(practice.startDate).getTime()) / (1000 * 60 * 60 * 24)
-        );
-        this.barChartData[i].data[this.days - dayOffset - 1] += this.getDuration(practice);
+        ) * multiplier;
+        this.barChartData[i].data[this.days - offset - 1] += PracticeTimePipe.getDuration(practice);
       });
     });
   }
@@ -57,13 +58,9 @@ export class PracticesChartComponent implements OnInit {
     return Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
   }
 
-  atMidNight(date: Date) {
+  private atMidNight(date: Date) {
     const d = new Date(date);
     d.setHours(0, 0, 0, 0);
     return d;
   }
-
-  chartClicked(e: any) {}
-
-  chartHovered(e: any) {}
 }

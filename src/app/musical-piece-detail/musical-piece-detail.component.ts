@@ -15,10 +15,14 @@ export class MusicalPieceDetailComponent implements OnInit {
   constructor(
     private readonly musicalPieceService: MusicalPieceService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router) { }
+    private readonly router: Router) {
+  }
 
   ngOnInit() {
-    this.musicalPiece = this.musicalPieceService.getMusicalPiece(Number(this.route.snapshot.params.id));
+    const fetch = () => this.musicalPiece = this.musicalPieceService.getMusicalPiece(Number(this.route.snapshot.params.id));
+    fetch();
+
+    setInterval(fetch, 1000 * 59);
   }
 
   onDeleteMusicalPiece() {

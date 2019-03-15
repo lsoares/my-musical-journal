@@ -11,7 +11,6 @@ import { Practice } from '../model/practice';
 export class PracticesChartComponent implements OnInit {
 
   @Input() musicalPieces: MusicalPiece[];
-  // TODO update chart when practices change https://angular.io/api/core/ChangeDetectorRef
   @Input() days;
   @Input() showLegend;
 

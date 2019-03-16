@@ -11,7 +11,8 @@ export class MusicalPieceListComponent implements OnInit {
   musicalPieces: MusicalPiece[];
   creating = false;
 
-  constructor(private musicPieceService: MusicalPieceService) {}
+  constructor(private readonly musicPieceService: MusicalPieceService) {
+  }
 
   ngOnInit() {
     this.musicalPieces = this.musicPieceService.getMusicalPieces();

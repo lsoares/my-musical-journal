@@ -15,6 +15,7 @@ export class ReportComponent implements OnInit {
   days = 10;
   minutesPerDay = 0;
   totalMinutes = 0;
+  type = 'week';
 
   constructor(private readonly musicalPieceService: MusicalPieceService) {
   }

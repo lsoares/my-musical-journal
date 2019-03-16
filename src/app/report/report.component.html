@@ -1,11 +1,12 @@
 <h3><span routerLink='/'>My Music Journal</span> ⇾ <span>Report</span></h3>
 
-<app-practices-chart [musicalPieces]="musicalPieces" [showLegend]=true>
-</app-practices-chart>
+<mat-form-field style="margin-left: 32px">
+  <mat-select [(value)]="type" (selectionChange)="ngOnInit()">
+    <mat-option value="day">Day</mat-option>
+    <mat-option value="week">Week</mat-option>
+    <mat-option value="month">Month</mat-option>
+  </mat-select>
+</mat-form-field>
 
-<p>
-	In the last {{ days }} days, you practiced {{ totalMinutes }} min;
-</p>
-<p>
-	{{ minutesPerDay }} minutes per day.
-</p>
+<app-practices-chart [musicalPieces]="musicalPieces" [showLegend]=true [unitOfTime]="type">
+</app-practices-chart>

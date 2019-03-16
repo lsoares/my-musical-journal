@@ -1,33 +1,35 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
 import { MusicalPiece } from '../model/musical-piece';
 import { PracticeTimePipe } from '../practice-time.pipe';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-practices-chart',
   templateUrl: './practices-chart.component.html',
   styleUrls: ['./practices-chart.component.scss']
 })
-export class PracticesChartComponent implements OnInit {
+export class PracticesChartComponent implements OnInit, OnChanges {
 
   @Input() musicalPieces: MusicalPiece[];
   @Input() showLegend;
+  @Input() unitOfTime;
 
-  type = 'day';
   columnCount = 7;
+  timeSlots: Moment[];
   barChartOptions: any = {
-    legend: { display: false },
+    legend: {display: false},
     scaleShowVerticalLines: false,
     responsive: true,
     scales: {
-      xAxes: [{ stacked: true }],
-      yAxes: [{ stacked: true, ticks: { suggestedMin: 0, suggestedMax: 30 } }]
+      xAxes: [{stacked: true}],
+      yAxes: [{stacked: true, ticks: {suggestedMin: 0, suggestedMax: 30}}]
     }
   };
-  barChartLabels: string[] = [];
+  barChartLabels: string[];
   barChartType = 'bar';
   barChartLegend = true;
-  barChartData: any[] = [];
+  barChartData: any[];
 
   constructor() {
   }
@@ -35,19 +37,17 @@ export class PracticesChartComponent implements OnInit {
   ngOnInit() {
     this.barChartOptions.legend.display = this.showLegend;
 
-    let multiplier = 1;
-    if (this.type === 'week') {
-      multiplier = 7;
-    } else if (this.type === 'month') {
-      multiplier = 30;
+    // time slots
+    this.timeSlots = [];
+    const lastDate = moment().startOf(this.unitOfTime);
+    for (let i = 0; i < this.columnCount; i++) {
+      this.timeSlots.unshift(moment(lastDate));
+      lastDate.startOf(this.unitOfTime).subtract(1, this.unitOfTime);
     }
+
     // labels
-    this.barChartLabels = [];
-    for (let i = this.columnCount; i > 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i * multiplier + 1);
-      this.barChartLabels.push(moment(this.atMidNight(date)).format('Do MMM'));
-    }
+    this.barChartLabels = this.timeSlots.map(date => date.format('Do MMM'));
+
     // data
     this.barChartData = [];
     this.musicalPieces.forEach((musicalPiece, i) => {
@@ -56,17 +56,14 @@ export class PracticesChartComponent implements OnInit {
 
       this.barChartData[i].data = Array(this.columnCount).fill(0);
       musicalPiece.practices.forEach(practice => {
-        const offset = Math.round((
-          this.atMidNight(new Date()).getTime() - this.atMidNight(practice.startDate).getTime()) / (1000 * 60 * 60 * 24)
-        ) * multiplier;
-        this.barChartData[i].data[this.columnCount - offset - 1] += PracticeTimePipe.getDuration(practice);
+        const diff = moment.duration(moment().diff(moment(practice.startDate).startOf(this.unitOfTime))).as(this.unitOfTime);
+        const slot = this.columnCount - Math.floor(diff) - 1;
+        this.barChartData[i].data[slot] += PracticeTimePipe.getDuration(practice);
       });
     });
   }
 
-  private atMidNight(date: Date) {
-    const d = new Date(date);
-    d.setHours(0, 0, 0, 0);
-    return d;
+  ngOnChanges(changes: SimpleChanges) {
+    this.ngOnInit();
   }
 }

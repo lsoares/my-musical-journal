@@ -7,7 +7,8 @@ import { Practice } from './model/practice';
 })
 export class MusicalPieceService {
 
-  constructor() { }
+  constructor() {
+  }
 
   getMusicalPieces(): MusicalPiece[] {
     const pieces = JSON.parse(localStorage.getItem('musicalPieces') || '[]');
@@ -22,7 +23,7 @@ export class MusicalPieceService {
     return this.getMusicalPieces().find(piece => piece.id === id);
   }
 
-  createMusicalPiece({ title, composer }) {
+  createMusicalPiece({title, composer}) {
     const musicalPieces = this.getMusicalPieces();
     const newMusicalPiece = new MusicalPiece(new Date().valueOf(), title, composer);
     musicalPieces.push(newMusicalPiece);
@@ -55,7 +56,9 @@ export class MusicalPieceService {
   stopPractice(musicalPieceId: number) {
     const practices = this.loadPractices(musicalPieceId);
     const lastPractice = practices.find(practice => practice.endDate == null);
-    if (!lastPractice) { return; }
+    if (!lastPractice) {
+      return;
+    }
 
     const newPractices = practices.filter(practice => practice.id !== lastPractice.id);
     newPractices.push(new Practice(lastPractice.id, lastPractice.startDate, new Date()));

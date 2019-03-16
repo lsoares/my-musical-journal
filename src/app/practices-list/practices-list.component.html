@@ -1,5 +1,19 @@
 <form (ngSubmit)="onSubmitCreatePractice()" ngNativeValidate>
   <table>
+    <tr>
+      <td>
+        <input [(ngModel)]='practiceModel.date' type="date" placeholder="Date"
+               maxlength="6" name='date' required size="4" maxlength="4" />
+      </td>
+      <td>
+        <input type="number" [(ngModel)]="practiceModel.duration" name='duration' placeholder="Duration (minutes)"
+               min="5" max="500" maxlength="4" size="4" required />
+      </td>
+      <td>
+        <button type="submit" class="btn" color="primary">✔</button>
+      </td>
+    </tr>
+
     <tr *ngFor="let practice of musicalPiece.practices">
       <td [title]="practice.startDate" align="right">
         {{ formatDate(practice.startDate) }}
@@ -7,19 +21,6 @@
       <td align="right">{{ practice | practiceTime }}</td>
       <td>
         <span title="Delete session" class='icon' (click)="onDeletingPractice(practice.id)">✖</span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input [(ngModel)]='practiceModel.date' type="date" placeholder="Date"
-                maxlength="6" name='date' required size="4" maxlength="4" />
-      </td>
-      <td>
-        <input type="number" [(ngModel)]="practiceModel.duration" name='duration' placeholder="Duration (minutes)"
-                min="5" max="500" maxlength="4" size="4" required />
-      </td>
-      <td>
-        <button type="submit" class="btn" color="primary">✔</button>
       </td>
     </tr>
   </table>

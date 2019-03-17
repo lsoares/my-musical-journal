@@ -12,11 +12,10 @@ export class MusicalPieceService {
 
   getMusicalPieces(): MusicalPiece[] {
     const pieces = JSON.parse(localStorage.getItem('musicalPieces') || '[]');
-    return pieces.map(musicalPiece =>
-      new MusicalPiece(
-        musicalPiece.id, musicalPiece.title, musicalPiece.composer, this.loadPractices(musicalPiece.id)
-      )
-    );
+    return pieces.map(musicalPiece => {
+      const practices = this.loadPractices(musicalPiece.id); // musicalPiece.practices.map(this.fixPracticesDates).reverse();
+      return new MusicalPiece(musicalPiece.id, musicalPiece.title, musicalPiece.composer, practices);
+    });
   }
 
   getMusicalPiece(id: number): MusicalPiece {
@@ -84,7 +83,7 @@ export class MusicalPieceService {
   }
 
   private storePractices(musicalPieceId: number, practices: Practice[]) {
-    practices = practices.sort((p1, p2) => p1.startDate.getTime() - p2.startDate.getTime());
+    practices = practices.sort((p1, p2) => p2.startDate.getTime() - p1.startDate.getTime());
     localStorage.setItem(musicalPieceId.toString(), JSON.stringify(practices));
   }
 }

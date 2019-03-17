@@ -18,6 +18,22 @@ export class PracticesChartComponent implements OnInit, OnChanges {
   columnCount = 7;
   timeSlots: Moment[];
   barChartOptions: any = {
+    tooltips: {
+      mode: 'index',
+      callbacks: {
+        label(tooltipItem, data) {
+          const label = data.datasets[tooltipItem.datasetIndex].label;
+          const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+          const total = data.datasets.reduce((acc, val) => acc + val.data[tooltipItem.index], 0);
+
+          if (tooltipItem.datasetIndex !== data.datasets.length - 1) {
+            return label + ': ' + PracticeTimePipe.convertMinsToHrsMins(value);
+          } else { // .. else, you display the dataset and the total, using an array
+            return [label + ': ' + PracticeTimePipe.convertMinsToHrsMins(value), 'Total: ' + PracticeTimePipe.convertMinsToHrsMins(total)];
+          }
+        }
+      }
+    },
     legend: {display: false},
     scaleShowVerticalLines: false,
     responsive: true,

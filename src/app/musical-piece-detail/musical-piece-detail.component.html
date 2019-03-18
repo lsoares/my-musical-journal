@@ -14,15 +14,7 @@
   ({{ getLastPractice() | practiceTime }}) Stop ⏹
 </button>
 
-<mat-form-field style="margin-left: 32px">
-  <mat-select [(value)]="type" (selectionChange)="ngOnInit()">
-    <mat-option value="day">Day</mat-option>
-    <mat-option value="week">Week</mat-option>
-    <mat-option value="month">Month</mat-option>
-  </mat-select>
-</mat-form-field>
-
-<app-practices-chart [musicalPieces]="[musicalPiece]" [showLegend]=false [unitOfTime]="type">
+<app-practices-chart [musicalPieces]="[musicalPiece]" [showLegend]=false [unitOfTime]="'day'">
 </app-practices-chart>
 
 <div style="max-height: 300px; overflow-y: auto;">

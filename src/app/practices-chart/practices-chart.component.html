@@ -1,3 +1,11 @@
+<mat-form-field style="margin-left: 32px">
+  <mat-select [(value)]="unitOfTime" (selectionChange)="ngOnInit()">
+    <mat-option value="day">Day</mat-option>
+    <mat-option value="week">Week</mat-option>
+    <mat-option value="month">Month</mat-option>
+  </mat-select>
+</mat-form-field>
+
 <div>
   <canvas baseChart width="400" height="400"
           [datasets]="barChartData"

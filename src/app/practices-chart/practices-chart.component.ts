@@ -34,6 +34,7 @@ export class PracticesChartComponent implements OnInit, OnChanges {
         }
       }
     },
+    maintainAspectRatio: false,
     legend: {display: false},
     scaleShowVerticalLines: false,
     responsive: true,

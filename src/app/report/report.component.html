@@ -1,12 +1,4 @@
 <h3><span routerLink='/'>My Music Journal</span> ⇾ <span>Report</span></h3>
 
-<mat-form-field style="margin-left: 32px">
-  <mat-select [(value)]="type" (selectionChange)="ngOnInit()">
-    <mat-option value="day">Day</mat-option>
-    <mat-option value="week">Week</mat-option>
-    <mat-option value="month">Month</mat-option>
-  </mat-select>
-</mat-form-field>
-
-<app-practices-chart [musicalPieces]="musicalPieces" [showLegend]=true [unitOfTime]="type">
+<app-practices-chart [musicalPieces]="musicalPieces" [showLegend]=true [unitOfTime]="'week'">
 </app-practices-chart>

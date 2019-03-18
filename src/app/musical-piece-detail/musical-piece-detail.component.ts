@@ -11,7 +11,6 @@ import { Practice } from '../model/practice';
 })
 export class MusicalPieceDetailComponent implements OnInit {
   musicalPiece: MusicalPiece;
-  type = 'day';
 
   constructor(
     private readonly musicalPieceService: MusicalPieceService,

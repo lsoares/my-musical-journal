@@ -9,14 +9,16 @@ import { Moment } from 'moment';
   templateUrl: './practices-chart.component.html',
   styleUrls: ['./practices-chart.component.scss']
 })
-export class PracticesChartComponent implements OnInit, OnChanges {
+export class PracticesChartComponent implements OnInit {
 
   @Input() musicalPieces: MusicalPiece[];
   @Input() showLegend;
   @Input() unitOfTime;
 
+  offset = 0;
   columnCount = 7;
   timeSlots: Moment[];
+
   barChartOptions: any = {
     tooltips: {
       mode: 'index',
@@ -56,7 +58,7 @@ export class PracticesChartComponent implements OnInit, OnChanges {
 
     // time slots
     this.timeSlots = [];
-    const lastDate = moment().startOf(this.unitOfTime);
+    const lastDate = moment().startOf(this.unitOfTime).add(this.offset, this.unitOfTime);
     for (let i = 0; i < this.columnCount; i++) {
       this.timeSlots.unshift(moment(lastDate));
       lastDate.startOf(this.unitOfTime).subtract(1, this.unitOfTime);
@@ -74,13 +76,24 @@ export class PracticesChartComponent implements OnInit, OnChanges {
       this.barChartData[i].data = Array(this.columnCount).fill(0);
       musicalPiece.practices.forEach(practice => {
         const diff = moment.duration(moment().diff(moment(practice.startDate).startOf(this.unitOfTime))).as(this.unitOfTime);
-        const slot = this.columnCount - Math.floor(diff) - 1;
+        const slot = this.columnCount - Math.floor(diff) - 1 - this.offset;
         this.barChartData[i].data[slot] += PracticeTimePipe.getDuration(practice);
       });
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  moveToToday() {
+    this.offset = 0;
+    this.ngOnInit();
+  }
+
+  moveLeft() {
+    this.offset -= this.columnCount;
+    this.ngOnInit();
+  }
+
+  moveRight() {
+    this.offset += this.columnCount;
     this.ngOnInit();
   }
 }

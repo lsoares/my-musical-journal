@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MusicalPieceService } from '../musical-piece-service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-create-musical-piece',
   templateUrl: './create-musical-piece.component.html'

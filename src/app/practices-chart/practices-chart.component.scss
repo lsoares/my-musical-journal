@@ -1,12 +1,20 @@
 ::ng-deep canvas {
   max-width: 800px;
+  min-height: 400px;
 }
 
 .material-icons {
   opacity: 0.3;
   margin-right: 16px;
+  vertical-align: middle;
 
   &:hover {
     opacity: 1;
   }
+}
+
+mat-form-field {
+  margin-left: 32px;
+  font-size: 80%;
+  vertical-align: middle;
 }

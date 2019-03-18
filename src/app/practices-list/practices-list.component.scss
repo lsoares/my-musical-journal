@@ -4,5 +4,16 @@
 
 table {
 	font-size: 80%;
-  font-family: monospace;
+
+  td:nth-child(2) {
+    font-family: "Courier New", Courier, monospace;
+  }
+}
+
+[name=date] {
+  width: 120px;
+
+  &:focus {
+    width: inherit;
+  }
 }

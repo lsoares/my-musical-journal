@@ -42,7 +42,14 @@ export class PracticesChartComponent implements OnInit {
     responsive: true,
     scales: {
       xAxes: [{stacked: true}],
-      yAxes: [{stacked: true, ticks: {suggestedMin: 0, suggestedMax: 30}}]
+      yAxes: [{
+        stacked: true, ticks: {
+          suggestedMin: 0, suggestedMax: 30,
+          callback(value) {
+            return PracticeTimePipe.convertMinsToHrsMins(value);
+          }
+        }
+      }]
     }
   };
   barChartLabels: string[];

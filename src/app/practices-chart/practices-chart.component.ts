@@ -45,9 +45,7 @@ export class PracticesChartComponent implements OnInit {
       yAxes: [{
         stacked: true, ticks: {
           suggestedMin: 0, suggestedMax: 30,
-          callback(value) {
-            return PracticeTimePipe.convertMinsToHrsMins(value);
-          }
+          callback: (value) => PracticeTimePipe.convertMinsToHrsMins(value)
         }
       }]
     }

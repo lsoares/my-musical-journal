@@ -10,18 +10,18 @@ export class PracticeTimePipe implements PipeTransform {
     return Math.round(((practice.endDate || new Date()).getTime() - practice.startDate.getTime()) / (60 * 1000));
   }
 
-  static convertMinsToHrsMins(mins) {
+  static convertMinsToHrsMins(mins): string {
     const h = Math.floor(mins / 60);
     const m = mins % 60;
-    const hStr = `${h}h`;
+    const hStr = h > 0 ? `${h}h` : '';
     const mStr = `${h > 0 && m < 10 ? '0' : ''}${mins % 60}m`;
     if (!h && !m) {
-      return 0;
+      return '0m';
     }
     return `${hStr}${mStr}`;
   }
 
-  transform(practice: Practice, args?: any): any {
+  transform(practice: Practice, args?: any): string {
     return PracticeTimePipe.convertMinsToHrsMins(PracticeTimePipe.getDuration(practice));
   }
 }

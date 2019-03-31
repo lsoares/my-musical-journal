@@ -5,6 +5,12 @@
 	equalizer
 </i>
 
+<i class="material-icons" *ngIf="!creating"
+   (click)="creating = !creating" title='Create musical piece'>
+   add_circle_outline</i>
+
+<app-create-musical-piece *ngIf="creating"></app-create-musical-piece>
+
 <mat-list *ngFor="let piece of musicalPieces, last as last" class="musical-pieces">
 	<mat-list-item routerLink='/pieces/{{ piece.id }}'>
 		{{ piece.title }}, {{ piece.composer }}
@@ -12,13 +18,6 @@
 	<mat-divider *ngIf="!last"></mat-divider>
 </mat-list>
 
-<i class="material-icons" *ngIf="!creating"
-   (click)="creating = !creating" title='Create musical piece'>
-	add_circle_outline
-</i>
-<br />
 
-<app-create-musical-piece *ngIf="creating">
-</app-create-musical-piece>
 
 <span routerLink="/debug" style="float: left">.</span>

@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { MusicalPiece } from '../model/musical-piece';
 import { PracticeTimePipe } from '../practice-time.pipe';
 import { Moment } from 'moment';
+import * as chartJs from 'chart.js';
 
 @Component({
   selector: 'app-practices-chart',
@@ -51,7 +52,7 @@ export class PracticesChartComponent implements OnInit {
     }
   };
   barChartLabels: string[];
-  barChartType = 'bar';
+  barChartType: chartJs.ChartType = 'bar';
   barChartLegend = true;
   barChartData: any[];
 

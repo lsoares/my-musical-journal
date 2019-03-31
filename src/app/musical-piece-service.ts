@@ -15,6 +15,9 @@ export class MusicalPieceService {
     return pieces.map(musicalPiece => {
       const practices = this.loadPractices(musicalPiece.id); // musicalPiece.practices.map(this.fixPracticesDates).reverse();
       return new MusicalPiece(musicalPiece.id, musicalPiece.title, musicalPiece.composer, practices);
+    }).sort((a: MusicalPiece, b: MusicalPiece) => {
+      const score = (mp: MusicalPiece) => mp.practices.length ? mp.practices[0].startDate.getDate() : 1000;
+      return score(b) - score(a);
     });
   }
 

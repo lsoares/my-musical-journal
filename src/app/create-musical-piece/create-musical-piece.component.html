@@ -9,7 +9,11 @@
            [(ngModel)]="musicalPiece.composer" name="composer">
   </mat-form-field>
 
-  <button type="submit" class="btn btn-success" mat-raised-button color="primary">
-      Create ✔
+  <button mat-raised-button type="submit" class="capital mat-primary" mat-raised-button color="primary">
+    Create
+  </button>
+
+  <button mat-raised-button (click)="onCancel()" class="capital mat-warn" mat-raised-button color="primary">
+    Cancel
   </button>
 </form>

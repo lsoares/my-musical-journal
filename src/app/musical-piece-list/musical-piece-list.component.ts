@@ -14,6 +14,10 @@ export class MusicalPieceListComponent implements OnInit {
   constructor(private readonly musicPieceService: MusicalPieceService) {
   }
 
+  cancelAddMusicalPiece() {
+    this.creating = false;
+  }
+
   ngOnInit() {
     this.musicalPieces = this.musicPieceService.getMusicalPieces();
   }

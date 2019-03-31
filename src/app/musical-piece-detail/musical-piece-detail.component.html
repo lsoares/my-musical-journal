@@ -1,5 +1,27 @@
 <h3>
-  <span routerLink='/'>My Music Journal</span> ⇾ <span>{{ musicalPiece.title }}, {{ musicalPiece.composer }}</span>
+  <div *ngIf="musicalPieceEdit === null">
+    <span routerLink='/'>My Music Journal</span> ⇾ <span>{{ musicalPiece.title }}, {{ musicalPiece.composer }}</span>
+    <i class="material-icons" title="Edit title/composer" (click)="onEdit()">
+      edit
+    </i>
+  </div>
+
+  <form (ngSubmit)="onSubmitEditMusicalPiece()" ngNativeValidate *ngIf="musicalPieceEdit !== null">
+    <mat-form-field>
+      <input matInput placeholder="Title" required pattern=".{3,}"
+             [(ngModel)]="musicalPieceEdit.title" name="title">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Composer" required pattern=".{3,}"
+             [(ngModel)]="musicalPieceEdit.composer" name="composer">
+    </mat-form-field>
+
+    <button type="submit" class="btn btn-success" mat-raised-button color="primary">
+      Save ✔
+    </button>
+  </form>
+
   <i class="material-icons" (click)="onDeleteMusicalPiece()" title="Delete musical piece"
      style="float:right;opacity:0.5">
     delete

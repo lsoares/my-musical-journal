@@ -25,6 +25,16 @@ export class MusicalPieceService {
     return this.getMusicalPieces().find(piece => piece.id === id);
   }
 
+  saveMusicalPiece({id, title, composer}) {
+    const musicalPieceEdited = this.getMusicalPieces().find(piece => piece.id === id);
+    if (musicalPieceEdited === null) {
+      return;
+    }
+    const musicalPiecesWithoutEdited = this.getMusicalPieces().filter(piece => piece.id !== id);
+    musicalPiecesWithoutEdited.push(new MusicalPiece(id, title, composer));
+    localStorage.setItem('musicalPieces', JSON.stringify(musicalPiecesWithoutEdited));
+  }
+
   createMusicalPiece({title, composer}) {
     const musicalPieces = this.getMusicalPieces();
     const newMusicalPiece = new MusicalPiece(new Date().valueOf(), title, composer);

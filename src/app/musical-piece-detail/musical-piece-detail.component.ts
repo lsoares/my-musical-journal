@@ -11,6 +11,7 @@ import { Practice } from '../model/practice';
 })
 export class MusicalPieceDetailComponent implements OnInit {
   musicalPiece: MusicalPiece;
+  musicalPieceEdit: any = null;
 
   constructor(
     private readonly musicalPieceService: MusicalPieceService,
@@ -30,6 +31,16 @@ export class MusicalPieceDetailComponent implements OnInit {
       this.musicalPieceService.deleteMusicalPiece(this.musicalPiece.id);
       this.router.navigate(['']);
     }
+  }
+
+  onEdit() {
+    this.musicalPieceEdit = { title: this.musicalPiece.title, composer:  this.musicalPiece.composer };
+  }
+
+  onSubmitEditMusicalPiece() {
+    this.musicalPieceService.saveMusicalPiece({...this.musicalPieceEdit, ...{id: this.musicalPiece.id}});
+    this.musicalPieceEdit = null;
+    this.ngOnInit();
   }
 
   getLastPractice(): Practice | null {
